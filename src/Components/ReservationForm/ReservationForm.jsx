@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Cookies from 'js-cookie';
 
 const CustomInput = React.forwardRef(({ value, onClick, onChange, placeholder }, ref) => (
   <input
@@ -37,10 +38,10 @@ const ReservationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formattedDate = startDate.toISOString().split('T')[0];
     const formattedTime = startTime.toTimeString().split(' ')[0];
-  
+
     const reservation = {
       name,
       phoneNumber,
@@ -48,16 +49,17 @@ const ReservationForm = () => {
       startTime: formattedTime,
       persons,
     };
-  
+
     try {
       const response = await fetch('http://localhost:3001/api/reserve', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Include credentials (cookies) in requests
         body: JSON.stringify(reservation),
       });
-  
+
       if (response.ok) {
         alert('Reservation successful!');
         // Clear the form
@@ -66,6 +68,8 @@ const ReservationForm = () => {
         setPersons('');
         setStartDate(null);
         setStartTime(null);
+        // Optionally set a cookie
+        Cookies.set('lastReservation', JSON.stringify(reservation), { expires: 7 });
       } else {
         alert('Failed to make reservation.');
       }
