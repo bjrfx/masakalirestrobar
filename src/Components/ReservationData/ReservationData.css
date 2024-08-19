@@ -1,0 +1,11 @@
+/* Default margin-top for mobile and small devices */
+.reservation-search {
+    margin-top: 35rem;
+  }
+  
+  /* Larger screens (e.g., tablets, desktops) */
+  @media screen and (min-width: 992px) {
+    .reservation-search {
+      margin-top: 70rem;
+    }
+  }

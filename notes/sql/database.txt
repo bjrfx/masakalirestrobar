@@ -1,0 +1,7 @@
+Steps to create:
+
+Create a database: 
+Step1: database name: masakali_reservation_form 
+Step2: and create a table from table.txt
+Step3: modify from: table_modify.txt
+Done!

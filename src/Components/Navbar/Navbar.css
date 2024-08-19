@@ -1,0 +1,46 @@
+/* Transparent Navbar */
+.transparent-navbar {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Navbar brand styling */
+.navbar-brand {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Navbar link styling */
+.navbar-nav .nav-link {
+    color: #fff !important;
+    padding: 10px 15px;
+}
+
+/* Hover effect for navbar links */
+.navbar-nav .nav-link:hover {
+    background-color: #444;
+    border-radius: 4px;
+}
+
+/* CTA button styling */
+.nav-item.btn-cta .nav-link {
+    color: #fbb448 !important;
+}
+
+/* Burger menu icon styling */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Add transition to change the navbar's transparency when scrolled */
+.transparent-navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.8); /* Less transparent on scroll */
+}
+/* Navbar logo styling */
+.navbar-logo {
+    height: 40px; /* Adjust the height according to your design */
+    width: auto; /* Maintain aspect ratio */
+    max-width: 100%; /* Responsive */
+    display: inline-block;
+    vertical-align: middle; /* Aligns logo vertically within the navbar */
+}
