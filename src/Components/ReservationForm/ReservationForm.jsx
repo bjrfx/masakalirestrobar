@@ -10,7 +10,7 @@ const CustomInput = React.forwardRef(({ value, onClick, onChange, placeholder },
     ref={ref}
     placeholder={placeholder}
     className="form-control"
-    style={{ color: 'black', backgroundColor: 'transparent', borderColor: '#f9f9f9' }} // Transparent background
+    style={{ color: 'black', backgroundColor: 'transparent', borderColor: '#f9f9f9' }}
   />
 ));
 
@@ -19,7 +19,7 @@ const CustomSelect = ({ value, onChange, options }) => (
     value={value}
     onChange={onChange}
     className="form-control"
-    style={{ color: 'black', backgroundColor: 'transparent', borderColor: '#f9f9f9' }} // Transparent background
+    style={{ color: 'black', backgroundColor: 'transparent', borderColor: '#f9f9f9' }}
   >
     <option value="" disabled>Persons</option>
     {options.map((option, index) => (
@@ -37,10 +37,10 @@ const ReservationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formattedDate = startDate.toISOString().split('T')[0];
     const formattedTime = startTime.toTimeString().split(' ')[0];
-  
+
     const reservation = {
       name,
       phoneNumber,
@@ -48,26 +48,27 @@ const ReservationForm = () => {
       startTime: formattedTime,
       persons,
     };
-  
+
     try {
-    //   const response = await fetch('http://localhost:3001/api/reserve', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(reservation),
-    //   });
-      const response = await fetch('/api/reserve', {
+      const response = await fetch('https://api.airtable.com/v0/appcRUV4NMy7IsDFI/tblqkjaFo2onOs9Tm', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(reservation),
+        body: JSON.stringify({
+          fields: {
+            Name: reservation.name,
+            PhoneNumber: reservation.phoneNumber,
+            StartDate: reservation.startDate,
+            StartTime: reservation.startTime,
+            Persons: reservation.persons,
+          }
+        }),
       });
-  
+
       if (response.ok) {
         alert('Reservation successful!');
-        // Clear the form
         setName('');
         setPhoneNumber('');
         setPersons('');

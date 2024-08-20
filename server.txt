@@ -14,3 +14,124 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
+
+
+
+
+
+//bak
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const mysql = require('mysql');
+const cors = require('cors');
+
+const app = express();
+const PORT = 3001;
+
+// CORS configuration
+app.use(cors({
+  origin: 'https://masakalirestrobar.ca', // Replace with your front-end domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // Allow credentials (cookies) to be sent
+  allowedHeaders: ['Content-Type', 'Authorization'] // Allow these headers
+}));
+
+app.use(bodyParser.json());
+
+// Set Referrer-Policy
+app.use((req, res, next) => {
+  res.header('Referrer-Policy', 'no-referrer-when-downgrade');
+  next();
+});
+
+// Serve static files from the build directory
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Create connection to MySQL database
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'masakali_kiran',
+  password: 'K143iran',
+  database: 'masakali_reservation_form',
+  charset: 'utf8mb4', // Ensure the charset matches the collation
+});
+
+db.connect((err) => {
+  if (err) throw err;
+  console.log('Connected to the database');
+});
+
+// Define the API endpoint to handle reservations
+app.post('/api/reserve', (req, res) => {
+  const { name, phoneNumber, startDate, startTime, persons } = req.body;
+
+  console.log('Received data:', req.body);
+
+  const sql = `INSERT INTO reservations (name, phone_number, date, time, persons) VALUES (?, ?, ?, ?, ?)`;
+
+  db.query(sql, [name, phoneNumber, startDate, startTime, persons], (err, result) => {
+    if (err) {
+      console.error('Database error:', err);
+      res.status(500).json({ success: false, message: 'Failed to make reservation.', error: err });
+    } else {
+      res.status(200).json({ success: true, message: 'Reservation made successfully', result });
+    }
+  });
+});
+
+// Fetch all reservations
+app.get('/api/reservations', (req, res) => {
+  const sql = `SELECT * FROM reservations ORDER BY id DESC`;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Database error:', err);
+      res.status(500).json({ success: false, message: 'Failed to fetch reservations.', error: err });
+    } else {
+      res.status(200).json({ success: true, reservations: results });
+    }
+  });
+});
+
+// Update a reservation
+app.put('/api/reservations/:id', (req, res) => {
+  const { id } = req.params;
+  const { name, phoneNumber, startDate, startTime, persons } = req.body;
+
+  const sql = `UPDATE reservations SET name = ?, phone_number = ?, date = ?, time = ?, persons = ? WHERE id = ?`;
+
+  db.query(sql, [name, phoneNumber, startDate, startTime, persons, id], (err, result) => {
+    if (err) {
+      console.error('Database error:', err);
+      res.status(500).json({ success: false, message: 'Failed to update reservation.', error: err });
+    } else {
+      res.status(200).json({ success: true, message: 'Reservation updated successfully' });
+    }
+  });
+});
+
+// Delete a reservation
+app.delete('/api/reservations/:id', (req, res) => {
+  const { id } = req.params;
+
+  const sql = `DELETE FROM reservations WHERE id = ?`;
+
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error('Database error:', err);
+      res.status(500).json({ success: false, message: 'Failed to delete reservation.', error: err });
+    } else {
+      res.status(200).json({ success: true, message: 'Reservation deleted successfully' });
+    }
+  });
+});
+
+// Handle all other requests by serving the index.html file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
