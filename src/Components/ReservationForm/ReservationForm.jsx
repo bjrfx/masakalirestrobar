@@ -38,44 +38,39 @@ const ReservationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formattedDate = startDate.toISOString().split('T')[0];
-    const formattedTime = startTime.toTimeString().split(' ')[0];
+    const formattedDate = startDate ? startDate.toISOString().split('T')[0] : '';
+    const formattedTime = startTime ? startTime.toTimeString().split(' ')[0] : '';
 
     const reservation = {
-      name,
-      phoneNumber,
-      startDate: formattedDate,
-      startTime: formattedTime,
-      persons,
+      "Name": name,
+      "Phone Number": phoneNumber,
+      "Start Date": formattedDate,
+      "Start Time": formattedTime,
+      "Persons": parseInt(persons), // Ensure Persons is sent as a number
     };
 
     try {
       const response = await fetch('https://api.airtable.com/v0/appcRUV4NMy7IsDFI/tblqkjaFo2onOs9Tm', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e`,
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e'
         },
-        body: JSON.stringify({
-          fields: {
-            Name: reservation.name,
-            PhoneNumber: reservation.phoneNumber,
-            StartDate: reservation.startDate,
-            StartTime: reservation.startTime,
-            Persons: reservation.persons,
-          }
-        }),
+        body: JSON.stringify({ fields: reservation }), // Corrected structure
       });
 
       if (response.ok) {
         alert('Reservation successful!');
+        // Clear the form
         setName('');
         setPhoneNumber('');
         setPersons('');
         setStartDate(null);
         setStartTime(null);
       } else {
-        alert('Failed to make reservation.');
+        const errorResponse = await response.json();
+        console.error('Failed to make reservation:', errorResponse);
+        alert(`Failed to make reservation: ${errorResponse.error.message}`);
       }
     } catch (error) {
       console.error('Error:', error);

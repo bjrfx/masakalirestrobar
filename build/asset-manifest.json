@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.7c02acbf.css",
-    "main.js": "/static/js/main.af8cc7f2.js",
+    "main.js": "/static/js/main.39fd58d6.js",
     "static/js/453.67a13986.chunk.js": "/static/js/453.67a13986.chunk.js",
     "static/media/potatotornado.jpeg": "/static/media/potatotornado.35421e0534482a2cbed8.jpeg",
     "static/media/chickentikkamasala.jpeg": "/static/media/chickentikkamasala.b4cdd3aded3f9242557d.jpeg",
@@ -12,11 +12,11 @@
     "static/media/masakali.png": "/static/media/masakali.10795664e911937d2aff.png",
     "index.html": "/index.html",
     "main.7c02acbf.css.map": "/static/css/main.7c02acbf.css.map",
-    "main.af8cc7f2.js.map": "/static/js/main.af8cc7f2.js.map",
+    "main.39fd58d6.js.map": "/static/js/main.39fd58d6.js.map",
     "453.67a13986.chunk.js.map": "/static/js/453.67a13986.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7c02acbf.css",
-    "static/js/main.af8cc7f2.js"
+    "static/js/main.39fd58d6.js"
   ]
 }

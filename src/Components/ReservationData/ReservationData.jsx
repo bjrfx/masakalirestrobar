@@ -6,11 +6,11 @@ const ReservationData = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [editingReservation, setEditingReservation] = useState(null);
   const [editedData, setEditedData] = useState({
-    name: '',
-    phoneNumber: '',
-    startDate: '',
-    startTime: '',
-    persons: '',
+    Name: '',
+    "Phone Number": '',
+    "Start Date": '',
+    "Start Time": '',
+    Persons: '',
   });
 
   useEffect(() => {
@@ -18,10 +18,21 @@ const ReservationData = () => {
   }, []);
 
   const fetchReservations = async () => {
-    const response = await fetch('http://localhost:3001/api/reservations');
+    const response = await fetch('https://api.airtable.com/v0/appcRUV4NMy7IsDFI/tblqkjaFo2onOs9Tm?view=Grid%20view', {
+      headers: {
+        Authorization: `Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e`,
+      },
+    });
     const data = await response.json();
-    if (data.success) {
-      setReservations(data.reservations);
+    if (data.records) {
+      setReservations(data.records.map(record => ({
+        id: record.id,
+        Name: record.fields.Name,
+        "Phone Number": record.fields["Phone Number"],
+        "Start Date": record.fields["Start Date"],
+        "Start Time": record.fields["Start Time"],
+        Persons: record.fields.Persons,
+      })));
     }
   };
 
@@ -32,39 +43,43 @@ const ReservationData = () => {
   const handleEdit = (reservation) => {
     setEditingReservation(reservation.id);
     setEditedData({
-      name: reservation.name,
-      phoneNumber: reservation.phone_number,
-      startDate: reservation.date,
-      startTime: reservation.time,
-      persons: reservation.persons,
+      Name: reservation.Name,
+      "Phone Number": reservation["Phone Number"],
+      "Start Date": reservation["Start Date"],
+      "Start Time": reservation["Start Time"],
+      Persons: reservation.Persons,
     });
   };
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:3001/api/reservations/${id}`, {
+    await fetch(`https://api.airtable.com/v0/appcRUV4NMy7IsDFI/tblqkjaFo2onOs9Tm/${id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e`,
+      },
     });
     fetchReservations();
   };
 
   const handleSave = async () => {
-    await fetch(`http://localhost:3001/api/reservations/${editingReservation}`, {
-      method: 'PUT',
+    await fetch(`https://api.airtable.com/v0/appcRUV4NMy7IsDFI/tblqkjaFo2onOs9Tm/${editingReservation}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e`,
       },
-      body: JSON.stringify(editedData),
+      body: JSON.stringify({ fields: editedData }),
     });
     setEditingReservation(null);
     fetchReservations();
   };
 
   const filteredReservations = reservations.filter((reservation) =>
-    reservation.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    reservation.phone_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    reservation.date.includes(searchTerm) ||
-    reservation.time.includes(searchTerm) ||
-    reservation.persons.toString().includes(searchTerm)
+    reservation.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    reservation["Phone Number"].toLowerCase().includes(searchTerm.toLowerCase()) ||
+    reservation["Start Date"].includes(searchTerm) ||
+    reservation["Start Time"].includes(searchTerm) ||
+    reservation.Persons.toString().includes(searchTerm)
   );
 
   return (
@@ -76,6 +91,9 @@ const ReservationData = () => {
         value={searchTerm}
         onChange={handleSearch}
       />
+      <div className="active-reservations">
+        <strong>Active Reservations: {reservations.length}</strong>
+      </div>
       <div style={{ overflowX: 'auto', marginTop: "5%", marginBottom: '10%' }}>
         <table className="table table-bordered table-responsive">
           <thead className="thead-dark">
@@ -97,40 +115,40 @@ const ReservationData = () => {
                       <input
                         type="text"
                         className="form-control"
-                        value={editedData.name}
-                        onChange={(e) => setEditedData({ ...editedData, name: e.target.value })}
+                        value={editedData.Name}
+                        onChange={(e) => setEditedData({ ...editedData, Name: e.target.value })}
                       />
                     </td>
                     <td>
                       <input
                         type="text"
                         className="form-control"
-                        value={editedData.phoneNumber}
-                        onChange={(e) => setEditedData({ ...editedData, phoneNumber: e.target.value })}
+                        value={editedData["Phone Number"]}
+                        onChange={(e) => setEditedData({ ...editedData, "Phone Number": e.target.value })}
                       />
                     </td>
                     <td>
                       <input
                         type="date"
                         className="form-control"
-                        value={editedData.startDate}
-                        onChange={(e) => setEditedData({ ...editedData, startDate: e.target.value })}
+                        value={editedData["Start Date"]}
+                        onChange={(e) => setEditedData({ ...editedData, "Start Date": e.target.value })}
                       />
                     </td>
                     <td>
                       <input
                         type="time"
                         className="form-control"
-                        value={editedData.startTime}
-                        onChange={(e) => setEditedData({ ...editedData, startTime: e.target.value })}
+                        value={editedData["Start Time"]}
+                        onChange={(e) => setEditedData({ ...editedData, "Start Time": e.target.value })}
                       />
                     </td>
                     <td>
                       <input
                         type="number"
                         className="form-control"
-                        value={editedData.persons}
-                        onChange={(e) => setEditedData({ ...editedData, persons: e.target.value })}
+                        value={editedData.Persons}
+                        onChange={(e) => setEditedData({ ...editedData, Persons: e.target.value })}
                       />
                     </td>
                     <td>
@@ -147,11 +165,11 @@ const ReservationData = () => {
                   </>
                 ) : (
                   <>
-                    <td>{reservation.name}</td>
-                    <td>{reservation.phone_number}</td>
-                    <td>{reservation.date}</td>
-                    <td>{reservation.time}</td>
-                    <td>{reservation.persons}</td>
+                    <td>{reservation.Name}</td>
+                    <td>{reservation["Phone Number"]}</td>
+                    <td>{reservation["Start Date"]}</td>
+                    <td>{reservation["Start Time"]}</td>
+                    <td>{reservation.Persons}</td>
                     <td>
                       <button className="btn btn-warning mr-2" onClick={() => handleEdit(reservation)}>
                         Edit
