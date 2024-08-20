@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b0e83167.css",
+    "main.js": "/static/js/main.d193ea57.js",
+    "static/js/453.67a13986.chunk.js": "/static/js/453.67a13986.chunk.js",
+    "static/media/potatotornado.jpeg": "/static/media/potatotornado.35421e0534482a2cbed8.jpeg",
+    "static/media/chickentikkamasala.jpeg": "/static/media/chickentikkamasala.b4cdd3aded3f9242557d.jpeg",
+    "static/media/hotnwings.jpg": "/static/media/hotnwings.826af72f749f2dc5eba5.jpg",
+    "static/media/butterchickenfries.jpg": "/static/media/butterchickenfries.cf79f36d0f66763b8e98.jpg",
+    "static/media/paneerpakora.jpg": "/static/media/paneerpakora.164d62a4bc494367ed0b.jpg",
+    "static/media/butterchicken.jpg": "/static/media/butterchicken.9cb3fc1302dcfd882435.jpg",
+    "static/media/masakali.png": "/static/media/masakali.10795664e911937d2aff.png",
+    "index.html": "/index.html",
+    "main.b0e83167.css.map": "/static/css/main.b0e83167.css.map",
+    "main.d193ea57.js.map": "/static/js/main.d193ea57.js.map",
+    "453.67a13986.chunk.js.map": "/static/js/453.67a13986.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b0e83167.css",
+    "static/js/main.d193ea57.js"
+  ]
+}
