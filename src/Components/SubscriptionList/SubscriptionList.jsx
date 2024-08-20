@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
+import Navbar from '../Navbar/Navbar';
+import HeaderComponent from '../Header/Header';
+import Footer from '../Footer/Footer';
+import './SubscriptionList.css';
 
 const SubscriptionList = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -36,7 +40,14 @@ const SubscriptionList = () => {
   );
 
   return (
-    <div className="container">
+    <Fragment>
+        <Navbar />
+        <HeaderComponent 
+        title="Subscription List"
+        textAlign="text-center"
+        size="sm"
+        />
+        <div className="container">
       <div className="active-subscriptions">
         <strong>Active Subscriptions: {subscriptions.length}</strong>
       </div>
@@ -64,6 +75,8 @@ const SubscriptionList = () => {
         </table>
       </div>
     </div>
+    <Footer />
+    </Fragment>
   );
 };
 
