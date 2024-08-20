@@ -62,14 +62,23 @@ const ReservationData = () => {
   };
 
   const handleSave = async () => {
+    const updatedData = {
+      Name: editedData.Name,
+      "Phone Number": editedData["Phone Number"],
+      "Start Date": editedData["Start Date"],
+      "Start Time": editedData["Start Time"],
+      Persons: parseInt(editedData.Persons, 10), // Ensure Persons is an integer
+    };
+
     await fetch(`https://api.airtable.com/v0/appcRUV4NMy7IsDFI/tblqkjaFo2onOs9Tm/${editingReservation}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e`,
       },
-      body: JSON.stringify({ fields: editedData }),
+      body: JSON.stringify({ fields: updatedData }),
     });
+
     setEditingReservation(null);
     fetchReservations();
   };
