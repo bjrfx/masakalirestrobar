@@ -42,21 +42,20 @@ const ReservationForm = () => {
     const formattedTime = startTime ? startTime.toTimeString().split(' ')[0] : '';
 
     const reservation = {
-      "Name": name,
-      "Phone Number": phoneNumber,
-      "Start Date": formattedDate,
-      "Start Time": formattedTime,
-      "Persons": parseInt(persons), // Ensure Persons is sent as a number
+      name,
+      phoneNumber,
+      startDate: formattedDate,
+      startTime: formattedTime,
+      persons: parseInt(persons), // Ensure Persons is sent as a number
     };
 
     try {
-      const response = await fetch('https://api.airtable.com/v0/appcRUV4NMy7IsDFI/tblqkjaFo2onOs9Tm', {
+      const response = await fetch('/api/reserve', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e'
         },
-        body: JSON.stringify({ fields: reservation }), // Corrected structure
+        body: JSON.stringify(reservation),
       });
 
       if (response.ok) {

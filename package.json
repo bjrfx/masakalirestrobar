@@ -12,6 +12,7 @@
     "jquery": "^3.7.1",
     "js-cookie": "^3.0.5",
     "mysql": "^2.18.1",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.14",
     "react": "^18.3.1",
     "react-countup": "^6.5.3",
