@@ -33,7 +33,8 @@ async function sendEmail(reservationDetails) {
         Persons: ${reservationDetails.persons}
         Date: ${reservationDetails.startDate}
         Time: ${reservationDetails.startTime}
-        Active Reservations: ${reservationDetails.activeReservations}`
+        Active Reservations: ${reservationDetails.activeReservations}
+        View all reservations: https://masakalirestrobar.ca/allReservations`
     };
 
     // Send email
@@ -54,6 +55,35 @@ app.post('/api/reserve', express.json(), async (req, res) => {
 
     // Dynamically import node-fetch
     const fetch = (await import('node-fetch')).default;
+
+    // Add the reservation to Airtable
+    try {
+        const response = await fetch('https://api.airtable.com/v0/appcRUV4NMy7IsDFI/tblqkjaFo2onOs9Tm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e`,
+            },
+            body: JSON.stringify({
+                fields: {
+                    Name: name,
+                    "Phone Number": phoneNumber,
+                    "Start Date": startDate,
+                    "Start Time": startTime,
+                    Persons: persons
+                }
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error adding reservation to Airtable:', errorData);
+            return res.status(500).json({ success: false, message: 'Failed to add reservation to Airtable.' });
+        }
+    } catch (error) {
+        console.error('Error adding reservation to Airtable:', error);
+        return res.status(500).json({ success: false, message: 'Failed to add reservation to Airtable.' });
+    }
 
     // Fetch the actual number of active reservations from Airtable
     let activeReservations = 0; // Default to 0

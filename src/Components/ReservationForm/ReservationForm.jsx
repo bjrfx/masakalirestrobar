@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons from react-icons
+import './ReservationForm.css';
 
 const CustomInput = React.forwardRef(({ value, onClick, onChange, placeholder }, ref) => (
   <input
@@ -34,9 +36,15 @@ const ReservationForm = () => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [persons, setPersons] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [responseState, setResponseState] = useState(null); // null, 'success', 'error'
+  const [message, setMessage] = useState(''); // Message to display after submission
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setResponseState(null);
+    setMessage('');
 
     const formattedDate = startDate ? startDate.toISOString().split('T')[0] : '';
     const formattedTime = startTime ? startTime.toTimeString().split(' ')[0] : '';
@@ -59,21 +67,31 @@ const ReservationForm = () => {
       });
 
       if (response.ok) {
-        alert('Reservation successful!');
-        // Clear the form
-        setName('');
-        setPhoneNumber('');
-        setPersons('');
-        setStartDate(null);
-        setStartTime(null);
+        setLoading(false);
+        setResponseState('success');
+        setMessage('Reservation successful!');
+
+        // Clear the form after 1 second
+        setTimeout(() => {
+          setName('');
+          setPhoneNumber('');
+          setPersons('');
+          setStartDate(null);
+          setStartTime(null);
+          setResponseState(null);
+          setMessage(''); // Clear message after form reset
+        }, 3000);
       } else {
         const errorResponse = await response.json();
-        console.error('Failed to make reservation:', errorResponse);
-        alert(`Failed to make reservation: ${errorResponse.error.message}`);
+        setLoading(false);
+        setResponseState('error');
+        setMessage(`Failed to make reservation: ${errorResponse.error.message}`);
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error making reservation.');
+      setLoading(false);
+      setResponseState('error');
+      setMessage('Error making reservation.');
     }
   };
 
@@ -149,13 +167,36 @@ const ReservationForm = () => {
               </div>
               <div className="row form-group">
                 <div className="col-md-12">
-                  <input
+                  <button
                     type="submit"
-                    className="btn btn-primary btn-block"
-                    value="Reserve Now"
-                  />
+                    className={`btn btn-primary btn-block ${loading ? 'loading' : ''}`}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <span className="spinner-border spinner-border-sm"></span>
+                    ) : responseState === 'success' ? (
+                      <FaCheck />
+                    ) : responseState === 'error' ? (
+                      <FaTimes />
+                    ) : (
+                      'Reserve Now'
+                    )}
+                  </button>
                 </div>
               </div>
+              {message && (
+                <div className="row form-group">
+                  <div className="col-md-12">
+                    <p
+                      className={`reservation-message ${
+                        responseState === 'success' ? 'text-success' : 'text-danger'
+                      }`}
+                    >
+                      {message}
+                    </p>
+                  </div>
+                </div>
+              )}
             </form>
           </div>
         </div>

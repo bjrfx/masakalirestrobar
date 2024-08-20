@@ -1,0 +1,9 @@
+.spinner-border {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.2em;
+  }
+  
+  .loading {
+    pointer-events: none;
+  }
