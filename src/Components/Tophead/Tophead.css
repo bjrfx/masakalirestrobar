@@ -1,3 +1,40 @@
+/* topheader */
+.btn-primary:hover{	
+	background-color: #000;
+    color: white;
+    border-color: #000000;
+}	
+
+/* @media screen and (max-width: 768px) and (min-width: 0px)
+{
+  .topheader {
+      display: none!important;
+  }
+
+  .fixed-top
+  {
+    top:0px!important;
+  }
+  .restaurant{
+    margin-left:0px!important;
+  }
+} */
+
+.topheader{
+    background: black;
+  }
+  .topheader .topblock {
+      display: flex;
+      align-items: center;
+      float: right;
+  }
+.tophicon{
+  padding: 10px;
+  color: #b9b6b6;
+}
+/* related css above------------------ */
+
+/* other css-------- */
 /* Transparent Navbar */
 .transparent-navbar {
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
@@ -43,7 +80,4 @@
     max-width: 100%; /* Responsive */
     display: inline-block;
     vertical-align: middle; /* Aligns logo vertically within the navbar */
-}
-.navbar {
-    margin-top: 4.7rem;
 }

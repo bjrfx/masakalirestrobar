@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../../assets/logo/masakali.png'
-
+import Tophead from '../Tophead/Tophead'
 const Navbar = () => {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark fixed-top transparent-navbar">
+        <Fragment>
+            <Tophead />
+            <nav className="navbar navbar-expand-lg navbar-dark fixed-top transparent-navbar">
             <div className="container">
                 <Link className="navbar-brand" to="/">
                     <img 
@@ -66,6 +68,7 @@ const Navbar = () => {
                 </div>
             </div>
         </nav>
+        </Fragment>
     );
 }
 
