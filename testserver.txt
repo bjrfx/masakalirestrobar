@@ -25,8 +25,8 @@ async function sendEmail(reservationDetails) {
     // Setup email data
     let mailOptions = {
         from: '"Masakali Restrobar" <admin@masakalirestrobar.ca>',
-        to: 'masakalirestrobar@gmail.com',
-        subject: 'New Reservation Alert',
+        to: 'kiran.bjrfx1@gmail.com',
+        subject: 'New Reservation Alert (testing)',
         text: `New reservation details:
         Name: ${reservationDetails.name}
         Phone Number: ${reservationDetails.phoneNumber}

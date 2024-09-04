@@ -75,9 +75,12 @@
 }
 /* Navbar logo styling */
 .navbar-logo {
-    height: 40px; /* Adjust the height according to your design */
+    height: 50px; /* Adjust the height according to your design */
     width: auto; /* Maintain aspect ratio */
     max-width: 100%; /* Responsive */
     display: inline-block;
     vertical-align: middle; /* Aligns logo vertically within the navbar */
+}
+.tophead-number :hover {
+    cursor: pointer;
 }

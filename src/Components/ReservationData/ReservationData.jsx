@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './ReservationData.css'; // Assuming you have a CSS file for styling
+import { FaEdit, FaTrashAlt, FaArchive } from 'react-icons/fa';
+import './ReservationData.css';
 
 const ReservationData = () => {
   const [reservations, setReservations] = useState([]);
@@ -67,7 +68,7 @@ const ReservationData = () => {
       "Phone Number": editedData["Phone Number"],
       "Start Date": editedData["Start Date"],
       "Start Time": editedData["Start Time"],
-      Persons: parseInt(editedData.Persons, 10), // Ensure Persons is an integer
+      Persons: parseInt(editedData.Persons, 10),
     };
 
     await fetch(`https://api.airtable.com/v0/appcRUV4NMy7IsDFI/tblqkjaFo2onOs9Tm/${editingReservation}`, {
@@ -83,6 +84,35 @@ const ReservationData = () => {
     fetchReservations();
   };
 
+  const handleArchive = async (reservation) => {
+    const archivedData = {
+      fields: {
+        Name: reservation.Name,
+        "Phone Number": reservation["Phone Number"],
+        "Start Date": reservation["Start Date"],
+        "Start Time": reservation["Start Time"],
+        Persons: reservation.Persons,
+      },
+    };
+
+    await fetch(`https://api.airtable.com/v0/appR9pTEld4i3NTFJ/tblm0Bfb2n9HlvjdJ`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer patCivRJrJBScuORc.8bd709c0d76ff06234939d1fad4f2008148d0846fdb72523613b5394381dd21e`,
+      },
+      body: JSON.stringify(archivedData),
+    });
+
+    handleDelete(reservation.id);
+  };
+
+  const handleArchiveAll = async () => {
+    for (const reservation of reservations) {
+      await handleArchive(reservation);
+    }
+  };
+
   const filteredReservations = reservations.filter((reservation) =>
     reservation.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     reservation["Phone Number"].toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -95,13 +125,16 @@ const ReservationData = () => {
     <div className="container">
       <input
         type="text"
-        className="form-control mb-4 reservation-search" 
+        className="form-control mb-4 reservation-search"
         placeholder="Search reservations..."
         value={searchTerm}
         onChange={handleSearch}
       />
       <div className="active-reservations">
         <strong>Active Reservations: {reservations.length}</strong>
+        <button className="btn btn-info ml-3" onClick={handleArchiveAll}>
+          <FaArchive /> Archive All
+        </button>
       </div>
       <div style={{ overflowX: 'auto', marginTop: "5%", marginBottom: '10%' }}>
         <table className="table table-bordered table-responsive">
@@ -181,10 +214,13 @@ const ReservationData = () => {
                     <td>{reservation.Persons}</td>
                     <td>
                       <button className="btn btn-warning mr-2" onClick={() => handleEdit(reservation)}>
-                        Edit
+                        <FaEdit />
                       </button>
-                      <button className="btn btn-danger" onClick={() => handleDelete(reservation.id)}>
-                        Delete
+                      <button className="btn btn-danger mr-2" onClick={() => handleDelete(reservation.id)}>
+                        <FaTrashAlt />
+                      </button>
+                      <button className="btn btn-info" onClick={() => handleArchive(reservation)}>
+                        <FaArchive />
                       </button>
                     </td>
                   </>

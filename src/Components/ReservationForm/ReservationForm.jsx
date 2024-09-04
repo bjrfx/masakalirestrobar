@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons from react-icons
+import { FaCheck, FaTimes } from 'react-icons/fa';
 import './ReservationForm.css';
 
 const CustomInput = React.forwardRef(({ value, onClick, onChange, placeholder }, ref) => (
@@ -37,14 +37,26 @@ const ReservationForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [persons, setPersons] = useState('');
   const [loading, setLoading] = useState(false);
-  const [responseState, setResponseState] = useState(null); // null, 'success', 'error'
-  const [message, setMessage] = useState(''); // Message to display after submission
+  const [responseState, setResponseState] = useState(null);
+  const [message, setMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const validateForm = () => {
+    return name && phoneNumber && persons && startDate && startTime;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setResponseState(null);
     setMessage('');
+    setErrorMessage('');
+
+    if (!validateForm()) {
+      setLoading(false);
+      setErrorMessage('Please fill out the form and try submitting.');
+      return;
+    }
 
     const formattedDate = startDate ? startDate.toISOString().split('T')[0] : '';
     const formattedTime = startTime ? startTime.toTimeString().split(' ')[0] : '';
@@ -54,7 +66,7 @@ const ReservationForm = () => {
       phoneNumber,
       startDate: formattedDate,
       startTime: formattedTime,
-      persons: parseInt(persons), // Ensure Persons is sent as a number
+      persons: parseInt(persons),
     };
 
     try {
@@ -71,7 +83,7 @@ const ReservationForm = () => {
         setResponseState('success');
         setMessage('Reservation successful!');
 
-        // Clear the form after 1 second
+        // Clear the form after 3 seconds
         setTimeout(() => {
           setName('');
           setPhoneNumber('');
@@ -79,7 +91,7 @@ const ReservationForm = () => {
           setStartDate(null);
           setStartTime(null);
           setResponseState(null);
-          setMessage(''); // Clear message after form reset
+          setMessage('');
         }, 3000);
       } else {
         const errorResponse = await response.json();
@@ -182,6 +194,9 @@ const ReservationForm = () => {
                       'Reserve Now'
                     )}
                   </button>
+                  {errorMessage && (
+                    <p className="text-danger mt-2">{errorMessage}</p>
+                  )}
                 </div>
               </div>
               {message && (

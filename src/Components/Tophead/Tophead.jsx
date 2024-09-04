@@ -10,7 +10,7 @@ const Tophead = () => {
                             <div className="topnumber">
                                 <p className="top">
                                     <i className="fa fa-mobile" style={{ fontSize: '15px' }}>
-                                        <span style={{ marginLeft: '5px', fontFamily: 'Philosopher' }}><a
+                                        <span className='tophead-number' style={{ marginLeft: '5px', fontFamily: 'Philosopher' }}><a
                                             href="tel:+1 (613) 789-6777" style={{ color: '#bbbbbb!important' }}>+1 (613) 789-6777</a></span></i>
                                     {/* <button className="btn-primary btn-sm" style={{ marginLeft: '15px', marginRight: '15px' }}>Call Us</button> */}
                                     {/* <a href="tel:+16137896777" className="btn-primary btn-sm" style={{ marginLeft: '15px', marginRight: '15px' }}>

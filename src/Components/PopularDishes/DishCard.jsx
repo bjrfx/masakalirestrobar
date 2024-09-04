@@ -1,8 +1,8 @@
 import React from 'react'
-const DishCard = ({img_2, name, description, price}) => {
+const DishCard = ({img_2, name, description, price, href}) => {
     return (
         <div className="col-lg-4 col-md-4 col-sm-6">
-            <a href="images/img_2.jpg" className="fh5co-card-item image-popup">
+            <a href={href} className="fh5co-card-item image-popup">
                 <figure>
                     <div className="overlay"><i className="ti-plus"></i></div>
                     <img src={img_2} alt="Food" className="img-responsive" />
