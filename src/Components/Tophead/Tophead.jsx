@@ -1,8 +1,17 @@
 import React from 'react'
 import './Tophead.css'
 const Tophead = () => {
+    const topheadTransparency = {
+        // backgroundColor: 'rgba(0, 0, 0, 0.5)'
+        backgroundColor: 'black'
+    }
+    const openLiveChat = () => {
+        if (window.Tawk_API) {
+          window.Tawk_API.maximize();
+        }
+      };
     return (
-        <div className="topheader hdr  navbar-expand-lg navbar-dark fixed-top">
+        <div className="topheader hdr  navbar-expand-lg navbar-dark fixed-top" style={topheadTransparency}>
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
@@ -18,8 +27,12 @@ const Tophead = () => {
                                     </a> */}
 
                                     <i className="fa fa-map-pin" style={{ fontSize: '15px', marginLeft: '10px' }}>
-                                            <span style={{ marginLeft: '5px', fontFamily: 'Philosopher' }}><a
-                                        href="tel:+1 (613) 792-9777" style={{ color: '#bbbbbb!important', marginRight: '10px' }}>97 Clarence St</a></span></i>
+                                        <span style={{ marginLeft: '5px', fontFamily: 'Philosopher' }}><a
+                                            href="tel:+1 (613) 792-9777" style={{ color: '#bbbbbb!important', marginRight: '10px' }}>97 Clarence St</a></span></i>
+
+                                    {/* <button onClick={openLiveChat} style={{ background: 'none', border: 'none', color: '#fbb448', fontFamily: 'Philosopher', fontSize: '100%', marginRight: '2px' }}>
+                                        <i className="icon-chat"></i> Live Chat
+                                    </button> */}
                                 </p>
                             </div>
                             {/* <div className="tophicon">

@@ -6,7 +6,7 @@ import img_4 from '../../assets/food/hotnwings.jpg';
 import img_5 from '../../assets/food/potatotornado.jpeg';
 import img_6 from '../../assets/food/paneerpakora.jpg';
 import Modal from '../Modal/Modal'; // Import the Modal component
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './PopularDishes.css';
 
 const PopularDishes = () => {
@@ -22,6 +22,12 @@ const PopularDishes = () => {
 		setIsModalOpen(false);
 		setSelectedImage(null);
 	};
+	const navigate = useNavigate();
+    const handleClick = (to) => (e) => {
+        e.preventDefault();
+        navigate(to);
+        window.scrollTo(0, 450);
+    };
 
 	return (
 		<div className="gtco-section">
@@ -119,7 +125,7 @@ const PopularDishes = () => {
 
 				</div>
 				<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-					<Link to="/menu" className="btn btn-primary full-menu-btn">View Full Menu</Link>
+					<Link onClick={handleClick('/menu')} to="/menu" className="btn btn-primary full-menu-btn">View Full Menu</Link>
 				</div>
 			</div>
 			<Modal isOpen={isModalOpen} onClose={closeModal} imgSrc={selectedImage} />

@@ -1,5 +1,5 @@
 import React from 'react'
-const HeaderComponent = ({ textAlign, title, children, size, headerClass, headerImg }) => {
+const HeaderComponent = ({ textAlign, title, children, size, headerClass, headerImg, titleStyle }) => {
     
     return (
         <header id="gtco-header" className={`gtco-cover gtco-cover-${size}`} role="banner"

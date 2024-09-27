@@ -306,16 +306,16 @@
 	};
 
 	var parallax = function() {
-
-		if ( !isMobile.any() ) {
-			$(window).stellar({
-				horizontalScrolling: false,
-				hideDistantElements: false, 
-				responsive: true
-
-			});
-		}
-	};
+    $(window).on('load', function() {
+        if (!isMobile.any()) {
+            $(window).stellar({
+                horizontalScrolling: false,
+                hideDistantElements: false,
+                responsive: true
+            });
+        }
+    });
+};
 
 
 	

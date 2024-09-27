@@ -1,0 +1,12 @@
+/* Default text color */
+.fh5co-card-item h2.item-name, 
+.fh5co-card-item .item-price span.price {
+    color: black;
+    transition: color 0.3s ease-in-out;
+}
+
+/* Change color when the card is hovered */
+.fh5co-card-item:hover h2.item-name, 
+.fh5co-card-item:hover .item-price span.price {
+    color: #FBB448;
+}

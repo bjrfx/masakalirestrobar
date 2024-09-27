@@ -1,22 +1,32 @@
 {
   "files": {
-    "main.css": "/static/css/main.dd34e77e.css",
-    "main.js": "/static/js/main.cb190022.js",
+    "main.css": "/static/css/main.77aa550c.css",
+    "main.js": "/static/js/main.e05eeffe.js",
     "static/js/453.67a13986.chunk.js": "/static/js/453.67a13986.chunk.js",
+    "static/media/nuts.png": "/static/media/nuts.c8436816602165daf507.png",
+    "static/media/noImage1.png": "/static/media/noImage1.eb4d710b7327d5498ba3.png",
+    "static/media/gluten-free.png": "/static/media/gluten-free.3a19fa0c2d565257e6a2.png",
+    "static/media/vegan.png": "/static/media/vegan.66d74edd909dab6da897.png",
     "static/media/potatotornado.jpeg": "/static/media/potatotornado.35421e0534482a2cbed8.jpeg",
     "static/media/chickentikkamasala.jpeg": "/static/media/chickentikkamasala.b4cdd3aded3f9242557d.jpeg",
     "static/media/hotnwings.jpg": "/static/media/hotnwings.826af72f749f2dc5eba5.jpg",
     "static/media/butterchickenfries.jpg": "/static/media/butterchickenfries.cf79f36d0f66763b8e98.jpg",
+    "static/media/rangde.png": "/static/media/rangde.aaeecd24a54fa40d9e82.png",
+    "static/media/nonvegcurry.svg": "/static/media/nonvegcurry.07dbdff62be74145727ac7d65c8e71bf.svg",
     "static/media/paneerpakora.jpg": "/static/media/paneerpakora.164d62a4bc494367ed0b.jpg",
     "static/media/butterchicken.jpg": "/static/media/butterchicken.9cb3fc1302dcfd882435.jpg",
+    "static/media/curry.svg": "/static/media/curry.71b9007a1b431378162d8b7a81c9a28b.svg",
     "static/media/masakali.png": "/static/media/masakali.10795664e911937d2aff.png",
+    "static/media/masakaliCuisine.png": "/static/media/masakaliCuisine.b05ecec93cf7d91b18b0.png",
+    "static/media/appetizers.svg": "/static/media/appetizers.80d023dfae55fe099f1984dd1b1034d4.svg",
+    "static/media/star.svg": "/static/media/star.7e49f90d23832f31f23be80cca337d01.svg",
     "index.html": "/index.html",
-    "main.dd34e77e.css.map": "/static/css/main.dd34e77e.css.map",
-    "main.cb190022.js.map": "/static/js/main.cb190022.js.map",
+    "main.77aa550c.css.map": "/static/css/main.77aa550c.css.map",
+    "main.e05eeffe.js.map": "/static/js/main.e05eeffe.js.map",
     "453.67a13986.chunk.js.map": "/static/js/453.67a13986.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.dd34e77e.css",
-    "static/js/main.cb190022.js"
+    "static/css/main.77aa550c.css",
+    "static/js/main.e05eeffe.js"
   ]
 }
