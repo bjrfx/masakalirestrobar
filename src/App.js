@@ -7,6 +7,7 @@ import AllReservations from './pages/AllReservations/AllReservations'
 import SubscriptionList from './Components/SubscriptionList/SubscriptionList'
 import PageNotFound from './pages/pagenotfound/PageNotFound'
 import Settings from './pages/Settings/Settings'
+import ReserveNow from './pages/ReserveNow/ReserveNow'
 const App = () => {
   return (
     <Routes>
@@ -17,6 +18,7 @@ const App = () => {
       <Route path="/allReservations" element={<AllReservations />} />
       <Route path="/subscriptionList" element={<SubscriptionList />} />
       <Route path="*" element={<PageNotFound />} />
+      <Route path="/reservations" element={<ReserveNow />} />
       {/* <Route path="/about" element={<About />} /> */}
     </Routes>
   )
