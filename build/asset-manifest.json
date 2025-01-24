@@ -1,32 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.301c7ac6.css",
-    "main.js": "/static/js/main.daac8983.js",
+    "main.css": "/static/css/main.f8ae6d63.css",
+    "main.js": "/static/js/main.601b15cb.js",
     "static/js/453.67a13986.chunk.js": "/static/js/453.67a13986.chunk.js",
-    "static/media/nuts.png": "/static/media/nuts.c8436816602165daf507.png",
-    "static/media/noImage1.png": "/static/media/noImage1.eb4d710b7327d5498ba3.png",
-    "static/media/gluten-free.png": "/static/media/gluten-free.3a19fa0c2d565257e6a2.png",
-    "static/media/vegan.png": "/static/media/vegan.66d74edd909dab6da897.png",
+    "static/media/food.gif": "/static/media/food.7257357e852314d9397a.gif",
     "static/media/potatotornado.jpeg": "/static/media/potatotornado.35421e0534482a2cbed8.jpeg",
+    "static/media/bg.jpg": "/static/media/bg.2e2704e6404602f652db.jpg",
     "static/media/chickentikkamasala.jpeg": "/static/media/chickentikkamasala.b4cdd3aded3f9242557d.jpeg",
     "static/media/hotnwings.jpg": "/static/media/hotnwings.826af72f749f2dc5eba5.jpg",
     "static/media/butterchickenfries.jpg": "/static/media/butterchickenfries.cf79f36d0f66763b8e98.jpg",
     "static/media/rangde.png": "/static/media/rangde.aaeecd24a54fa40d9e82.png",
-    "static/media/nonvegcurry.svg": "/static/media/nonvegcurry.07dbdff62be74145727ac7d65c8e71bf.svg",
     "static/media/paneerpakora.jpg": "/static/media/paneerpakora.164d62a4bc494367ed0b.jpg",
     "static/media/butterchicken.jpg": "/static/media/butterchicken.9cb3fc1302dcfd882435.jpg",
-    "static/media/curry.svg": "/static/media/curry.71b9007a1b431378162d8b7a81c9a28b.svg",
     "static/media/masakali.png": "/static/media/masakali.10795664e911937d2aff.png",
     "static/media/masakaliCuisine.png": "/static/media/masakaliCuisine.b05ecec93cf7d91b18b0.png",
-    "static/media/appetizers.svg": "/static/media/appetizers.80d023dfae55fe099f1984dd1b1034d4.svg",
-    "static/media/star.svg": "/static/media/star.7e49f90d23832f31f23be80cca337d01.svg",
     "index.html": "/index.html",
-    "main.301c7ac6.css.map": "/static/css/main.301c7ac6.css.map",
-    "main.daac8983.js.map": "/static/js/main.daac8983.js.map",
+    "main.f8ae6d63.css.map": "/static/css/main.f8ae6d63.css.map",
+    "main.601b15cb.js.map": "/static/js/main.601b15cb.js.map",
     "453.67a13986.chunk.js.map": "/static/js/453.67a13986.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.301c7ac6.css",
-    "static/js/main.daac8983.js"
+    "static/css/main.f8ae6d63.css",
+    "static/js/main.601b15cb.js"
   ]
 }

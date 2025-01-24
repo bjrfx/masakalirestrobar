@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FaCheck, FaTimes } from 'react-icons/fa';
+import { db } from '../../config/firebase'; // Import Firestore instance
+import { collection, addDoc } from 'firebase/firestore';
 import './ReservationForm.css';
 
 const CustomInput = React.forwardRef(({ value, onClick, onChange, placeholder }, ref) => (
@@ -70,6 +72,7 @@ const ReservationForm = () => {
     };
 
     try {
+      // Save to Airtable (already implemented)
       const response = await fetch('/api/reserve', {
         method: 'POST',
         headers: {
@@ -77,6 +80,9 @@ const ReservationForm = () => {
         },
         body: JSON.stringify(reservation),
       });
+
+      // Save to Firebase Firestore
+      await addDoc(collection(db, 'AllReservations'), reservation);
 
       if (response.ok) {
         setLoading(false);

@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import './ReserveNowForm.css';
+import { db } from '../../config/firebase'; // Import Firestore instance
+import { collection, addDoc } from 'firebase/firestore';
 
 const ReserveNowForm = () => {
   const [formData, setFormData] = useState({
@@ -36,6 +38,7 @@ const ReserveNowForm = () => {
     };
 
     try {
+      // Store in Airtable (already implemented)
       const response = await fetch('/api/reserve', {
         method: 'POST',
         headers: {
@@ -44,16 +47,19 @@ const ReserveNowForm = () => {
         body: JSON.stringify(reservation),
       });
 
+      // Store in Firebase Firestore
+      await addDoc(collection(db, 'AllReservations'), reservation);
+
       if (response.ok) {
         setLoading(false);
         setMessage('Reservation successful!');
         setShowConfirmation(true);
 
-        // Automatically hide the confirmation message after 5 seconds
+        // Automatically hide the confirmation message after 10 seconds
         setTimeout(() => {
           setFormData({ name: '', phoneNumber: '', persons: 1, startDate: '', startTime: '' });
-          setShowConfirmation(false); // Hide confirmation message after 5 seconds
-        }, 10000);  // 10000ms = 10 seconds
+          setShowConfirmation(false); // Hide confirmation message after 10 seconds
+        }, 10000); // 10000ms = 10 seconds
       } else {
         const errorResponse = await response.json();
         setLoading(false);
@@ -67,7 +73,13 @@ const ReserveNowForm = () => {
 
   return (
     <Fragment>
-      <div id="booking" className="section" style={{ backgroundImage: 'url(https://lh3.googleusercontent.com/p/AF1QipNQrKjzaikXB-mLOh8aLy4f8GPF1x8Fj06P6T5w=s1360-w1360-h1020)' }}>
+      <div
+        id="booking"
+        className="section"
+        style={{
+          backgroundImage: 'url(https://lh3.googleusercontent.com/p/AF1QipNQrKjzaikXB-mLOh8aLy4f8GPF1x8Fj06P6T5w=s1360-w1360-h1020)',
+        }}
+      >
         <div className="section-center">
           <div className="container">
             <div className="row justify-content-center">
@@ -78,7 +90,9 @@ const ReserveNowForm = () => {
                   {showConfirmation && (
                     <div className="alert alert-success">
                       <h4>Thank you for your reservation, {formData.name}!</h4>
-                      <p>Your reservation is set for {formData.startDate} at {formData.startTime}.</p>
+                      <p>
+                        Your reservation is set for {formData.startDate} at {formData.startTime}.
+                      </p>
                     </div>
                   )}
 

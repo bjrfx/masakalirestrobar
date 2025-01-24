@@ -1,0 +1,342 @@
+import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../config/firebase"; // Adjust the path based on your file structure
+// import "bootstrap/dist/css/bootstrap.min.css";
+import "./TestAllMenu.css"; // Import custom styles
+
+const TestAllMenu = () => {
+  const [menuData, setMenuData] = useState({});
+  const [filteredMenu, setFilteredMenu] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({
+    veg: false,
+    nonVeg: false,
+    glutenFree: false,
+    vegan: false,
+    nutsFree: false,
+    recommended: false,
+  });
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Define the desired order of categories
+  const categoryOrder = [
+    "Veg Appetizers",
+    "Non-Veg Appetizers",
+    "Tandoori Appetizers",
+    "Veg Curries",
+    "Non-Veg Curries",
+    "Veg Biryani",
+    "Non-Veg Biryani",
+    "Roti",
+    "Naan",
+    "Steamed Rice",
+    "Sides",
+    "Desserts",
+  ];
+
+  // Fetch data from Firestore
+  useEffect(() => {
+    const fetchData = async () => {
+      const menuCollection = collection(db, "menu");
+      const snapshot = await getDocs(menuCollection);
+      const data = {};
+      snapshot.forEach((doc) => {
+        data[doc.id] = doc.data();
+      });
+      setMenuData(data);
+      setFilteredMenu(data);
+    };
+
+    fetchData();
+  }, []);
+
+  // Handle filters and search
+  useEffect(() => {
+    let updatedMenu = JSON.parse(JSON.stringify(menuData));
+
+    // Apply filters
+    Object.keys(updatedMenu).forEach((key) => {
+      updatedMenu[key].items = updatedMenu[key].items.filter((item) => {
+        if (filters.veg && !item.veg) return false;
+        if (filters.nonVeg && item.veg) return false;
+        if (filters.glutenFree && item.containsGluten) return false;
+        if (filters.vegan && !item.vegan) return false;
+        if (filters.nutsFree && item.containsNuts) return false;
+        if (filters.recommended && !item.recommended) return false;
+        if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+        return true;
+      });
+    });
+
+    setFilteredMenu(updatedMenu);
+  }, [filters, searchQuery, menuData]);
+
+  // Helper function to generate category IDs for navigation
+  const generateCategoryId = (name) => name.replace(/\s+/g, "-").toLowerCase();
+
+  return (
+    <div className="container-fluid menu-container">
+      <div className="row">
+        {/* Left Navigation */}
+        <div className="col-md-3 d-none d-md-block">
+          <div className="search-and-filter">
+            <input
+              type="text"
+              className="form-control mb-3"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <div className="filters">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="veg"
+                  checked={filters.veg}
+                  onChange={(e) => setFilters({ ...filters, veg: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="veg">Veg</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="nonVeg"
+                  checked={filters.nonVeg}
+                  onChange={(e) => setFilters({ ...filters, nonVeg: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="nonVeg">Non-Veg</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="glutenFree"
+                  checked={filters.glutenFree}
+                  onChange={(e) => setFilters({ ...filters, glutenFree: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="glutenFree">Gluten Free</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="vegan"
+                  checked={filters.vegan}
+                  onChange={(e) => setFilters({ ...filters, vegan: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="vegan">Vegan</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="nutsFree"
+                  checked={filters.nutsFree}
+                  onChange={(e) => setFilters({ ...filters, nutsFree: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="nutsFree">Nuts Free</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="recommended"
+                  checked={filters.recommended}
+                  onChange={(e) => setFilters({ ...filters, recommended: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="recommended">Recommended</label>
+              </div>
+            </div>
+          </div>
+          <div className="nav flex-column nav-pills sticky-side-nav" role="tablist" aria-orientation="vertical">
+            {categoryOrder
+              .filter((category) => Object.values(filteredMenu).find((item) => item.name === category))
+              .map((category) => {
+                const key = Object.keys(filteredMenu).find((key) => filteredMenu[key].name === category);
+                return (
+                  <a
+                    key={key}
+                    className="nav-link"
+                    href={`#${generateCategoryId(category)}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const section = document.getElementById(generateCategoryId(category));
+                      if (section) {
+                        section.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                  >
+                    {category}
+                  </a>
+                );
+              })}
+          </div>
+        </div>
+
+        {/* Menu Items */}
+        <div className="col-md-9">
+          {categoryOrder
+            .filter((category) => Object.values(filteredMenu).find((item) => item.name === category))
+            .map((category) => {
+              const key = Object.keys(filteredMenu).find((key) => filteredMenu[key].name === category);
+              return (
+                <div key={key} id={generateCategoryId(category)} className="mb-5">
+                  {/* Heading for the section */}
+                  <h3 className="text-center section-heading mb-4">{category}</h3>
+
+                  <div className="row">
+                    {filteredMenu[key].items.map((item, index) => (
+                      <div key={index} className="col-md-4 mb-4">
+                        <div className="card h-100 shadow-sm">
+                          <img
+                            src={item.img}
+                            className="card-img-top rounded-top"
+                            alt={item.name}
+                            style={{ height: "200px", objectFit: "cover" }}
+                          />
+                          <div className="card-body">
+                            <h4 className="card-title d-flex justify-content-between align-items-center">
+                              {item.name}
+                              {item.recommended && (
+                                <span className="text-warning">★</span>
+                              )}
+                            </h4>
+                            <p className="card-text">{item.description}</p>
+                            <p className="font-weight-bold text-primary">Price: ${item.price}</p>
+                            {item.containsNuts && (
+                              <p className="text-danger small">Contains Nuts</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
+
+      {/* Mobile Navigation at the Bottom */}
+      <div className="mobile-nav-wrapper d-block d-md-none">
+        <div
+          className="mobile-nav-circle"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsMobileMenuOpen(!isMobileMenuOpen);
+          }}
+        >
+          <div className="burger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        {isMobileMenuOpen && (
+          <div className="mobile-nav-dropdown">
+            <input
+              type="text"
+              className="form-control mb-3"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <div className="filters">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="veg-mobile"
+                  checked={filters.veg}
+                  onChange={(e) => setFilters({ ...filters, veg: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="veg-mobile">Veg</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="nonVeg-mobile"
+                  checked={filters.nonVeg}
+                  onChange={(e) => setFilters({ ...filters, nonVeg: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="nonVeg-mobile">Non-Veg</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="glutenFree-mobile"
+                  checked={filters.glutenFree}
+                  onChange={(e) => setFilters({ ...filters, glutenFree: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="glutenFree-mobile">Gluten Free</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="vegan-mobile"
+                  checked={filters.vegan}
+                  onChange={(e) => setFilters({ ...filters, vegan: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="vegan-mobile">Vegan</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="nutsFree-mobile"
+                  checked={filters.nutsFree}
+                  onChange={(e) => setFilters({ ...filters, nutsFree: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="nutsFree-mobile">Nuts Free</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="recommended-mobile"
+                  checked={filters.recommended}
+                  onChange={(e) => setFilters({ ...filters, recommended: e.target.checked })}
+                />
+                <label className="form-check-label" htmlFor="recommended-mobile">Recommended</label>
+              </div>
+            </div>
+            <ul className="list-unstyled">
+              {categoryOrder
+                .filter((category) => Object.values(filteredMenu).find((item) => item.name === category))
+                .map((category) => {
+                  const key = Object.keys(filteredMenu).find((key) => filteredMenu[key].name === category);
+                  return (
+                    <li key={key} className="mobile-nav-item">
+                      <a
+                        href={`#${generateCategoryId(category)}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const section = document.getElementById(generateCategoryId(category));
+                          if (section) {
+                            section.scrollIntoView({ behavior: "smooth" });
+                          }
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="mobile-nav-link"
+                      >
+                        {category}
+                      </a>
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default TestAllMenu;
+
+/* TestAllMenu.css */

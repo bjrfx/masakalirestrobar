@@ -1,0 +1,80 @@
+/* MenuContent.css */
+.menu-content {
+    padding: 20px;
+    height: auto;
+    overflow-y: auto;
+    height: 100vh;
+  }
+  
+  .section-heading {
+    font-size: 2.8rem;
+    color: #ffffff;
+    margin-top: 10px;
+    text-transform: capitalize;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-img-top {
+    border-bottom: 1px solid #ddd;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    color: #0d0d0d;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .card-text {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .text-warning {
+    font-size: 1.2rem;
+  }
+  
+  .text-primary {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .text-danger {
+    font-size: 0.9rem;
+  }
+.section-box{
+    background-color: rgb(42, 40, 40);
+    padding: 10px;
+    margin-bottom: 10px;
+}  
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full-screen height */
+    background-color: #ffffff; /* Optional: light background color */
+  }
+  
+  .foodLoading {
+    width: 100px; /* Adjust the size of the loading GIF */
+    height: auto;
+  }

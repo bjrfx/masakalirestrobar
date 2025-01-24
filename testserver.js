@@ -24,7 +24,7 @@ async function sendEmail(reservationDetails) {
 
     // Setup email data
     let mailOptions = {
-        from: '"Masakali Restrobar" <admin@masakalirestrobar.ca>',
+        from: '"Masakali Restrobar" <kiran.bjrfx1@gmail.com>',
         to: 'kiran.bjrfx1@gmail.com',
         subject: 'New Reservation Alert (testing)',
         text: `New reservation details:
@@ -33,8 +33,8 @@ async function sendEmail(reservationDetails) {
         Persons: ${reservationDetails.persons}
         Date: ${reservationDetails.startDate}
         Time: ${reservationDetails.startTime}
-        Active Reservations: ${reservationDetails.activeReservations}
-        View all reservations: https://masakalirestrobar.ca/allReservations`
+        // Active Reservations: ${reservationDetails.activeReservations}
+        View all reservations: https://app.masakalirestrobar.ca/`
     };
 
     // Send email

@@ -1,0 +1,60 @@
+/* MobileNavigation.css */
+.mobile-nav-wrapper {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+  }
+  
+  .mobile-nav-circle {
+    width: 60px;
+    height: 60px;
+    background-color: #343a40;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .burger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 20px;
+  }
+  
+  .burger-icon span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+  }
+  
+  .mobile-nav-dropdown {
+    position: fixed;
+    bottom: 5rem;
+    right: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    width: 250px;
+  }
+  
+  .mobile-nav-item {
+    margin-bottom: 10px;
+  }
+  
+  .mobile-nav-link {
+    color: #343a40;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+  }
+  
+  .mobile-nav-link:hover {
+    color: #007bff;
+  }

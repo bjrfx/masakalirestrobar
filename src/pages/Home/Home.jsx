@@ -9,9 +9,10 @@ import SubscribeForm from '../../Components/SubscribeForm/SubscribeForm'
 import Footer from '../../Components/Footer/Footer'
 import ReservationForm from '../../Components/ReservationForm/ReservationForm'
 import TypewriterText from '../../Components/TypewriterText/TypewriterText'
+import bgImage from '../../assets/background/bg.jpg'
 const Home = () => {
-    const unsplachUrl = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    const bgimg = 'https://lh3.googleusercontent.com/p/AF1QipNQrKjzaikXB-mLOh8aLy4f8GPF1x8Fj06P6T5w=s1360-w1360-h1020'
+    // const unsplachUrl = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    // const bgimg = 'https://lh3.googleusercontent.com/p/AF1QipNQrKjzaikXB-mLOh8aLy4f8GPF1x8Fj06P6T5w=s1360-w1360-h1020'
     // Text lines for typewriter animation
     const typewriterLines = [
         'Taste all our menu',
@@ -30,15 +31,13 @@ const Home = () => {
         <Fragment>
             {/* <div className="gtco-loader"></div> */}
             <div id="page">
-                {/* <TestNavbar />
-                <TestHeader /> */}
                 <Navbar />
                <HeaderComponent 
                size = "md"
                textAlign= "text-center"
                 title={<TypewriterText lines={typewriterLines} />}
                 headerClass= "col-md-7 mt-text"
-                headerImg={bgimg}
+                headerImg={bgImage}
                 children={<ReservationForm />}
                />
                 <PopularDishes />
